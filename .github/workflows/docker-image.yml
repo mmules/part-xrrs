@@ -1,18 +1,14 @@
-name: Docker Image CI
-
+name: Build Docker Image
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
+  workflow_dispatch:
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      - uses: actions/checkout@master
+      - name: Build Docker Image
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: namemf224/patrv2s
+          username: '${{ secrets.DOCKER_USERNAME }}'
+          password: '${{ secrets.DOCKER_PASSWORD }}'
